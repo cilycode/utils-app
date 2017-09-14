@@ -2,4 +2,5 @@
     <string name="app_name">Utils_App_Rx</string>
 
     <string name="text_default_loading_please_wait">正在加载，请耐心等待…</string>
+    <string name="str_please_click_again_and_exit">再按一次，退出程序</string>
 </resources>

@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cily.utils.app.Init;
+import com.cily.utils.app.R;
 import com.cily.utils.app.dia.LoadingDialog;
 import com.cily.utils.app.listener.LoadingDialogCountDownTimerListener;
 import com.cily.utils.app.utils.ToastUtils;
 import com.cily.utils.base.StrUtils;
+import com.cily.utils.base.Sys;
 import com.cily.utils.log.L;
 
 
@@ -172,5 +174,29 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setLoadingCountDownTimeTotal(long loadingCountDownTimeTotal) {
         this.loadingCountDownTimeTotal = loadingCountDownTimeTotal;
+    }
+
+    private long lastClickBack;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    protected void onBackPressed(boolean doubleClickBack){
+        onBackPressed(doubleClickBack, getString(R.string.str_please_click_again_and_exit));
+    }
+
+    protected void onBackPressed(boolean doubleClickBack, String toastMsg){
+        if(doubleClickBack){
+            if (System.currentTimeMillis() - lastClickBack < 2000){
+                Sys.exit();
+            }else {
+                lastClickBack = System.currentTimeMillis();
+                showToast(toastMsg);
+            }
+        }else{
+            onBackPressed();
+        }
     }
 }
