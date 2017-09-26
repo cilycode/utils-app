@@ -79,7 +79,7 @@ public class AppUtils {
 
     }
 
-    private final static PackageManager getPm(Context cx) {
+    public final static PackageManager getPm(Context cx) {
         if (cx == null) {
             L.v(TAG, "getPm: cx null");
             return null;

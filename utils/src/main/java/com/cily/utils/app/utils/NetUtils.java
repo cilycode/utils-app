@@ -1,6 +1,7 @@
 package com.cily.utils.app.utils;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -546,14 +547,28 @@ public class NetUtils {
 
         @SuppressWarnings("MissingPermission")
         public static String getActiveMacAddress(Context context) {
-            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-            WifiInfo info = wifi.getConnectionInfo();
-
-            if (info != null) {
-                return info.getMacAddress();
+            PackageManager pm = AppUtils.getPm(context);
+            if (pm == null){
+                L.v(TAG, "The PackageManage is null.");
+                return "";
             }
+            try{
+                boolean permission = PackageManager.PERMISSION_GRANTED == pm.checkPermission(
+                        "android.permission.ACCESS_WIFI_STATE", AppUtils.getPackageName(context));
+                if (!permission){
+                    L.w(TAG, "No permission to wifi.");
+                    return "";
+                }
+                WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
+                WifiInfo info = wifi.getConnectionInfo();
+
+                if (info != null) {
+                    return info.getMacAddress();
+                }
+            }catch (Exception e){
+                L.printException(e);
+            }
             return "";
         }
 
