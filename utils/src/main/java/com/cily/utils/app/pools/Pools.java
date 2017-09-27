@@ -51,6 +51,8 @@ public class Pools {
 
         private int mPoolSize;
 
+        private boolean fixedPool = true;
+
         /**
          * Creates a new instance.
          *
@@ -88,15 +90,16 @@ public class Pools {
             if (isInPool(instance)) {
 //                throw new IllegalStateException("Already in the pool!");
                 Logs.sysOut("The instance is already in the pool!");
-                return false;
+                return true;
             }
             if (mPoolSize < mPool.length) {
                 mPool[mPoolSize] = instance;
                 mPoolSize++;
                 return true;
             }else{
-                mPool = Arrays.copyOf(mPool, mPool.length * 2 + 1);
-
+                if (!fixedPool){
+                    mPool = Arrays.copyOf(mPool, mPool.length * 2 + 1);
+                }
             }
             return false;
         }
@@ -119,6 +122,10 @@ public class Pools {
 
         public void gc(){
             mPool = null;
+        }
+
+        public void setFixedPool(boolean fixedPool) {
+            this.fixedPool = fixedPool;
         }
     }
 
