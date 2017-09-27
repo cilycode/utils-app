@@ -38,6 +38,12 @@ public final class Event implements Parcelable {
         }
     }
 
+    public static void setFixedPool(boolean fixed){
+        if (sPool != null){
+            sPool.setFixedPool(fixed);
+        }
+    }
+
     public void recycle(){
         /**注释需放开*/
         if (sPool != null){
