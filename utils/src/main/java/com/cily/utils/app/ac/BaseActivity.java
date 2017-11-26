@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cily.utils.a.a;
 import com.cily.utils.app.Init;
 import com.cily.utils.app.R;
 import com.cily.utils.app.dia.LoadingDialog;
@@ -78,6 +80,12 @@ public class BaseActivity extends AppCompatActivity {
 
             startActivity(i);
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        a.a(this);
     }
 
     @Override
