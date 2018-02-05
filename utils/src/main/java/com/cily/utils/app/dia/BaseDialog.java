@@ -87,6 +87,18 @@ public class BaseDialog {
         }
     }
 
+    public boolean isShowing(){
+        if (!AcUtils.finishing(ac) && mDialog != null){
+            return mDialog.isShowing();
+        }else {
+            return false;
+        }
+    }
+
+    public Dialog getDialog(){
+        return mDialog;
+    }
+
     public void dismiss() {
         if (!AcUtils.finishing(ac) && mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();

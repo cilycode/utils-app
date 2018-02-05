@@ -86,6 +86,18 @@ public class BaseContextDialog {
         }
     }
 
+    public boolean isShowing(){
+        if (cx != null && mDialog != null){
+            return mDialog.isShowing();
+        }else {
+            return false;
+        }
+    }
+
+    public Dialog getDialog(){
+        return mDialog;
+    }
+
     public void dismiss() {
         if (cx != null && mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
