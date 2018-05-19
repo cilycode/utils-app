@@ -54,18 +54,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected Button findBtn(@IdRes int id){
-        return findView(id);
-    }
-
-    protected TextView findTv(@IdRes int id){
-        return findView(id);
-    }
-
-    protected ImageView findImg(@IdRes int id){
-        return findView(id);
-    }
-
     protected void debugToast(String str) {
         ToastUtils.showToast(this, str, Init.isDebug());
     }

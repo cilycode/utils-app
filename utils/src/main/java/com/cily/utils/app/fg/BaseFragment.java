@@ -43,10 +43,8 @@ public class BaseFragment extends Fragment {
             if (!StrUtils.isEmpty(msg)){
                 loadingDia.setDefaultMsg(msg);
             }
-
         }
         startLoadingTimer(loadingCountDownTimeTotal);
-
         loadingDia.show();
     }
 

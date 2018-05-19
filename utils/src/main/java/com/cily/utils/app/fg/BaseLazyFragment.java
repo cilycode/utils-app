@@ -1,6 +1,7 @@
 package com.cily.utils.app.fg;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,23 @@ public abstract class BaseLazyFragment extends BaseFragment {
         }
 
         return mRootView;
+    }
+
+    /**
+     * 找控件，结果可能为null
+     * @param id
+     * @return
+     */
+    protected <V extends View> V findView(@IdRes int id){
+        if (mRootView == null){
+            return null;
+        }
+        try{
+            return (V)mRootView.findViewById(id);
+        }catch (ClassCastException e){
+            L.e(TAG, "Could not cast View to concrete class");
+            return null;
+        }
     }
 
     @Override
@@ -74,8 +92,8 @@ public abstract class BaseLazyFragment extends BaseFragment {
     protected abstract View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**对应Fragment的onActivityCreated方法*/
-    protected abstract void load();
+    protected void load(){}
 
     /**确保数据只会加载一次*/
-    protected abstract void loadOnly();
+    protected void loadOnly(){}
 }

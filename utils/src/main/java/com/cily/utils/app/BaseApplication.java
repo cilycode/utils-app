@@ -17,12 +17,12 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
 
+    protected void initLogInfo(){
         Logs.setSysInfo(AppUtils.getAppName(this), AppUtils.getAppSign(this),
                 AppUtils.getVersionName(this), AppUtils.getSystemVersion(),
                 NetUtils.getActiveMacAddress(this), AppUtils.getDeviceBrand(),
                 AppUtils.getSystemModel(), AppUtils.getSystemModel());
-
-//        DbUtils.init(this);
     }
 }
