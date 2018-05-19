@@ -42,7 +42,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
         try{
             return (V)mRootView.findViewById(id);
         }catch (ClassCastException e){
-            L.e(TAG, "Could not cast View to concrete class");
+            L.printException(e);
             return null;
         }
     }
@@ -62,8 +62,13 @@ public abstract class BaseLazyFragment extends BaseFragment {
             lazyLoad();
         }else {
             isVisible = false;
+            if (isPrepared){
+                isHint();
+            }
         }
     }
+
+    protected void isHint(){}
 
     private void lazyLoad(){
         if (!isVisible){
