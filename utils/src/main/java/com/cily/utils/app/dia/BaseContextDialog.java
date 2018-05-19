@@ -2,6 +2,7 @@ package com.cily.utils.app.dia;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -17,34 +18,32 @@ import com.cily.utils.app.utils.AcUtils;
 import com.cily.utils.app.utils.ScreenUtils;
 
 /**
- * user:cily
- * time:2017/7/4
- * desc:
+ * Created by admin on 2018/1/12.
  */
 
-public class BaseDialog {
+public class BaseContextDialog {
     protected final String TAG = this.getClass().getSimpleName();
     private Dialog mDialog;
-    private Activity ac;
+    private Context cx;
     private View rootView;
     private TextView tv_title;
 
-    public BaseDialog(Activity ac, @LayoutRes int layoutId){
-        if (AcUtils.finishing(ac)){
+    public BaseContextDialog(Context cx, @LayoutRes int layoutId){
+        if (cx == null){
             return;
         }
 
-        this.ac = ac;
+        this.cx = cx;
         builder(layoutId);
     }
 
     private void builder(@LayoutRes int layoutId) {
-        mDialog = new Dialog(ac, R.style.CommonDialogStyle);
+        mDialog = new Dialog(cx, R.style.CommonDialogStyle);
         Window window = mDialog.getWindow();
         if (window != null) {
             WindowManager.LayoutParams params = window.getAttributes();
-            params.width = (int)(ScreenUtils.getScreenWidth(ac) * 0.8);
-            params.height = ScreenUtils.getScreenHeight(ac);
+            params.width = (int)(ScreenUtils.getWidthInDp(cx) * 0.8);
+            params.height = ScreenUtils.getHeightInDp(cx);
             window.setGravity(Gravity.CENTER);
             params.x = 0;
             params.y = 0;
@@ -62,7 +61,7 @@ public class BaseDialog {
         if (layoutId <= 0){
             layoutId = R.layout.default_dia_singlebtn;
         }
-        rootView = View.inflate(ac, layoutId, null);
+        rootView = View.inflate(cx, layoutId, null);
         return rootView;
     }
 
@@ -82,13 +81,13 @@ public class BaseDialog {
     }
 
     public void show() {
-        if (!AcUtils.finishing(ac) && mDialog != null && !mDialog.isShowing()) {
+        if (cx != null && mDialog != null && !mDialog.isShowing()) {
             mDialog.show();
         }
     }
 
     public boolean isShowing(){
-        if (!AcUtils.finishing(ac) && mDialog != null){
+        if (cx != null && mDialog != null){
             return mDialog.isShowing();
         }else {
             return false;
@@ -100,27 +99,27 @@ public class BaseDialog {
     }
 
     public void dismiss() {
-        if (!AcUtils.finishing(ac) && mDialog != null && mDialog.isShowing()) {
+        if (cx != null && mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
 
-    public BaseDialog setCancelable(boolean cancel) {
-        if (!AcUtils.finishing(ac) && mDialog != null) {
+    public BaseContextDialog setCancelable(boolean cancel) {
+        if (cx != null && mDialog != null) {
             mDialog.setCancelable(cancel);
         }
         return this;
     }
 
-    public BaseDialog setCanceledOnTouchOutside(boolean cancel) {
-        if (!AcUtils.finishing(ac) && mDialog != null) {
+    public BaseContextDialog setCanceledOnTouchOutside(boolean cancel) {
+        if (cx != null && mDialog != null) {
             mDialog.setCanceledOnTouchOutside(cancel);
         }
         return this;
     }
 
     public void setOnDisListener(DialogInterface.OnDismissListener l){
-        if (!AcUtils.finishing(ac) && mDialog != null) {
+        if (cx != null && mDialog != null) {
             if (l != null) {
                 mDialog.setOnDismissListener(l);
             }
